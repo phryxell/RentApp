@@ -1,0 +1,44 @@
+﻿@model IEnumerable<RentApp.Models.ImageModal>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Bilder</h1>
+<br />
+<p>
+    <a asp-action="Create" class="btn btn-info">Lägg till bild</a>
+</p>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Titel
+            </th>
+            <th>
+                Bildnamn
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageName)
+            </td>
+            <td>
+                <img src="@("~/Image/"+item.ImageName)" asp-append-version="true" style="height:200px;width:200px;"  />
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.ImageId">Radera</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

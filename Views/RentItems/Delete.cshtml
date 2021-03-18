@@ -1,0 +1,45 @@
+﻿@model RentApp.Models.RentItems
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Är du säker att du vill radera denna utrustning?</h3>
+<div>
+    <br />
+    <h4>Utrustning</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Available)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Available)
+        </dd>
+        <dt class = "col-sm-2">
+           Tillhör kategori
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TypeOfEquipment.Name)
+        </dd>
+        <dt class = "col-sm-2">
+           Visas för bild
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ImageModal.Title)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="RentItemId" />
+        <input type="submit" value="Radera" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-outline-dark">Tillbaka <i class="fas fa-backward"></i></a>
+    </form>
+</div>

@@ -1,0 +1,96 @@
+﻿@model PaginatedList<RentApp.Models.RentItems>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h1>Utrustning för uthyrning</h1>
+<br />
+<form asp-controller="RentItems" asp-action="Index" method="get">
+    <p>
+        Sök utrustning: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+        <input type="submit" value="Sök" />
+    </p>
+</form>
+<br />
+@if (User.IsInRole("Administrator"))// check whether the user is authenticated or not
+{
+    <p>
+        <a asp-action="Create" class="btn btn-info">Lägg till utrustning</a>
+    </p>
+}
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["SortName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Namn <i class="fas fa-sort"></i></a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["SortEquipName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Utrustning <i class="fas fa-sort"></i></a>
+            </th>
+            <th>
+                Tillgänglig
+            </th>
+            <th>
+            </th>
+            @if (User.Identity.IsAuthenticated)// check whether the user is authenticated or not
+            {
+                <th></th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfEquipment.Name)
+            </td>
+            <td>
+                @Html.Raw((item.Available) ? "Ja" : "Utlånad")
+            </td>
+            <td>
+                @if (item.ImageModal != null && item.ImageModal.ImageName != null)
+                {
+                    <img src="@("~/Image/"+item.ImageModal.ImageName)" asp-append-version="true" style="height:200px;width:200px;" />
+                }
+            </td>
+
+            @if (User.IsInRole("Administrator"))// check whether the user is authenticated or not
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.RentItemId">Editera</a> |
+                    <a asp-action="Details" asp-route-id="@item.RentItemId">Information</a> |
+                    <a asp-action="Delete" asp-route-id="@item.RentItemId">Radera</a>
+                </td>
+            }
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-info @prevDisabled">
+    Föregående
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-info @nextDisabled">
+    Nästa
+</a>

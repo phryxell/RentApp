@@ -1,0 +1,40 @@
+﻿@model IEnumerable<RentApp.Models.TypeOfEquipment>
+
+@{
+    ViewData["Title"] = "Utrustning";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Typ av utrustning</h1>
+<br />
+<p>Lägg till kategori av utrustning som kan erbjudas vid uthyrning</p>
+<br />
+<p>
+    <a asp-action="Create" class="btn btn-info">Lägg till kategori</a>
+</p>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Kategori
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.EquipmentId">Editera</a> |
+                    <a asp-action="Details" asp-route-id="@item.EquipmentId">Information</a> |
+                    <a asp-action="Delete" asp-route-id="@item.EquipmentId">Radera</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

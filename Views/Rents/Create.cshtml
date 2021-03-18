@@ -1,0 +1,55 @@
+﻿@model RentApp.Models.Rent
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    DateTime now = DateTime.Now;
+}
+
+<h1>Hyr utrustning</h1>
+
+<h4>Fyll i formuläret nedan för att hyra utrustning</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TelNum" class="control-label"></label>
+                <input asp-for="TelNum" class="form-control" />
+                <span asp-validation-for="TelNum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="RentDate" value="@now" class="form-control" />
+                <span asp-validation-for="RentDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RentItemId" class="control-label">Utrustning</label>
+                <select asp-for="RentItemId" class="form-control" asp-items="ViewBag.RentItemId">
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Hyr utrustning" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Tillbaka <i class="fas fa-backward"></i></a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,45 @@
+﻿@model RentApp.Models.RentItems
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Information</h1>
+
+<div>
+    <br />
+    <h4>Utrustning</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Available)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Available)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeOfEquipment.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TypeOfEquipment.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageModal.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ImageModal.Title)
+        </dd>
+    </dl>
+</div>
+<br />
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.RentItemId" class="btn btn-info">Editera</a> |
+    <a asp-action="Index" class="btn btn-outline-dark">Tillbaka <i class="fas fa-backward"></i></a>
+</div>

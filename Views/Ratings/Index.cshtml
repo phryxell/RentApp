@@ -1,0 +1,52 @@
+﻿@model IEnumerable<RentApp.Models.Rating>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Omdömen från tidigare kunder</h1>
+<br />
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Lägg till recension</a>
+    </p>
+}
+
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Opinion)
+            </th>
+            <th>
+                Utrustning
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opinion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RentItems.Name)
+                </td>
+                @if (User.IsInRole("Administrator"))// check whether the user is authenticated or not
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.RatingId">Editera</a> |
+                        <a asp-action="Details" asp-route-id="@item.RatingId">Information</a> |
+                        <a asp-action="Delete" asp-route-id="@item.RatingId">Radera</a>
+                    </td>
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>

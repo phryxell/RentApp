@@ -1,0 +1,89 @@
+﻿@model IEnumerable<RentApp.Models.Rent>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Hyr utrustning</h1>
+<br />
+
+@if (User.Identity.IsAuthenticated)// check whether the user is authenticated or not
+{
+<p>
+    <a asp-action="Create" class="btn btn-primary">Låna utrustning</a>
+</p>
+}
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RentDate)
+            </th>
+            <th>
+                Utrustning
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            string date = item.RentDate.ToString("yyyy-MM-dd");
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            @if (User.IsInRole("Administrator"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+            }
+            else
+            {
+                <td>- - -</td>
+            }
+
+            @if (User.IsInRole("Administrator"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.TelNum)
+                </td>
+            }
+            else
+            {
+                <td>07X - XXX XX XX</td>
+            }
+            <td>
+                @date
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentItems.Name)
+            </td>
+            @if (User.IsInRole("Administrator"))// check whether the user is authenticated or not
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.RentId">Editera</a> |
+                    <a asp-action="Details" asp-route-id="@item.RentId">Information</a> |
+                    <a asp-action="Delete" asp-route-id="@item.RentId">Återlämnat</a>
+                </td>
+            }
+
+        </tr>
+        }
+
+    </tbody>
+</table>
