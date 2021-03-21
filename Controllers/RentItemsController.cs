@@ -32,7 +32,7 @@ namespace RentApp.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["SortName"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
-            ViewData["SortEquipName"] = String.IsNullOrEmpty(sortOrder) ? "TypeOfEquipment.Name_desc" : "";
+            ViewData["SortEquipName"] = sortOrder == "TypeOfEquipment" ? "TypeOfEquipment.Name_desc" : "TypeOfEquipment";
 
             if (searchString != null)
             {
@@ -61,6 +61,9 @@ namespace RentApp.Controllers
                     break;
                 case "TypeOfEquipment.Name_desc":
                     searchApp = searchApp.OrderByDescending(s => s.TypeOfEquipment.Name);
+                    break;
+                case "TypeOfEquipment":
+                    searchApp = searchApp.OrderBy(s => s.TypeOfEquipment.Name);
                     break;
                 default:
                     searchApp = searchApp.OrderBy(s => s.Name);
