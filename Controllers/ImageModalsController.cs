@@ -161,6 +161,12 @@ namespace RentApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var imageModal = await _context.ImageModals.FindAsync(id);
+
+            //delete image from wwwroot/image
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "image", imageModal.ImageName);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
+
             _context.ImageModals.Remove(imageModal);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
